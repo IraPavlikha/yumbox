@@ -1,0 +1,37 @@
+@import "../../styles/variables.scss";
+
+.footer {
+  padding: 80px 0 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+h3 {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+
+h4 {
+  margin-bottom: 16px;
+}
+
+p {
+  color: $secondary;
+  margin-bottom: 8px;
+}
+
+.bottom {
+  margin-top: 60px;
+  color: $secondary;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
