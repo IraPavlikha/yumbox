@@ -4,21 +4,60 @@ import { useCartStore } from "../../store/cartStore";
 import { HiOutlineTrash, HiOutlineX } from "react-icons/hi";
 
 const CartDrawer = () => {
-    const { cart, isOpen, closeCart, increase, decrease, removeItem } = useCartStore();
-    const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const {
+        cart,
+        isOpen,
+        closeCart,
+        increase,
+        decrease,
+        removeItem,
+        clearCart,
+    } = useCartStore();
+
+    const subtotal = cart.reduce(
+        (acc, item) => acc + item.price * item.quantity,
+        0
+    );
+
     const deliveryFee = 50;
     const discount = subtotal >= 1000 ? subtotal * 0.1 : 0;
-
-    const totalToPay = (subtotal - discount) + deliveryFee;
+    const totalToPay = subtotal - discount + deliveryFee;
 
     const handleCheckout = () => {
-        console.log("Дані замовлення:", {
-            items: cart,
+        if (cart.length === 0) return;
+        const orderItems = cart.map(item => {
+            const total = item.price * item.quantity;
+            return {
+                id: item.id,
+                title: item.title,
+                price: item.price,
+                quantity: item.quantity,
+                total,
+            };
+        });
+        const order = {
+            items: orderItems,
             subtotal,
             discount,
             delivery: deliveryFee,
-            total: totalToPay
+            total: totalToPay,
+        };
+        console.group("ORDER CHECKOUT");
+        orderItems.forEach(item => {
+            console.log(
+                `${item.title} | qty: ${item.quantity} | total: ${item.total} UAH`
+            );
         });
+
+        console.log("----------------------");
+        console.log(`SUBTOTAL: ${subtotal}`);
+        console.log(`DISCOUNT: ${discount}`);
+        console.log(`DELIVERY: ${deliveryFee}`);
+        console.log(`TOTAL: ${totalToPay}`);
+
+        console.groupEnd();
+        clearCart();
+        //closeCart();
     };
 
     return (
@@ -28,17 +67,22 @@ const CartDrawer = () => {
                     <motion.div
                         className={styles.backdrop}
                         onClick={closeCart}
-                        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
                     />
+
                     <motion.div
                         className={styles.drawer}
-                        initial={{x: "100%"}} animate={{x: 0}} exit={{x: "100%"}}
-                        transition={{type: "tween", duration: 0.4}}
+                        initial={{ x: "100%" }}
+                        animate={{ x: 0 }}
+                        exit={{ x: "100%" }}
+                        transition={{ type: "tween", duration: 0.4 }}
                     >
                         <div className={styles.header}>
                             <h2>Корзина</h2>
                             <button onClick={closeCart} className={styles.closeBtn}>
-                                <HiOutlineX/>
+                                <HiOutlineX />
                             </button>
                         </div>
 
@@ -46,22 +90,32 @@ const CartDrawer = () => {
                             {cart.map((item) => (
                                 <div key={item.id} className={styles.item}>
                                     <div className={styles.itemTop}>
-                                        <img src={item.image} alt=""/>
+                                        <img src={item.image} alt="" />
                                         <div className={styles.itemInfo}>
                                             <h4>{item.title}</h4>
-                                            <span>{item.weight || '1500 гр'}</span>
+                                            <span>{item.weight || "1500 гр"}</span>
                                         </div>
-                                        <button className={styles.removeBtn} onClick={() => removeItem(item.id)}>
-                                            <HiOutlineTrash/>
+                                        <button
+                                            className={styles.removeBtn}
+                                            onClick={() => removeItem(item.id)}
+                                        >
+                                            <HiOutlineTrash />
                                         </button>
                                     </div>
 
                                     <div className={styles.itemBottom}>
-                                        <div className={styles.price}>{item.price} ₴</div>
+                                        <div className={styles.price}>
+                                            {item.price} ₴
+                                        </div>
+
                                         <div className={styles.counter}>
-                                            <button onClick={() => decrease(item.id)}>−</button>
+                                            <button onClick={() => decrease(item.id)}>
+                                                −
+                                            </button>
                                             <span>{item.quantity}</span>
-                                            <button onClick={() => increase(item.id)}>+</button>
+                                            <button onClick={() => increase(item.id)}>
+                                                +
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -76,9 +130,15 @@ const CartDrawer = () => {
                                 </div>
 
                                 {discount > 0 && (
-                                    <div className={`${styles.row} ${styles.discount}`}>
-                                        <span>Знижка 10% (від 1000 ₴)</span>
-                                        <span>-{discount.toFixed(0)} ₴</span>
+                                    <div
+                                        className={`${styles.row} ${styles.discount}`}
+                                    >
+                                        <span>
+                                            Знижка 10% (від 1000 ₴)
+                                        </span>
+                                        <span>
+                                            -{discount.toFixed(0)} ₴
+                                        </span>
                                     </div>
                                 )}
 
@@ -88,7 +148,10 @@ const CartDrawer = () => {
                                 </div>
                             </div>
 
-                            <button className={styles.checkoutBtn} onClick={handleCheckout}>
+                            <button
+                                className={styles.checkoutBtn}
+                                onClick={handleCheckout}
+                            >
                                 оформити за {totalToPay.toFixed(0)} ₴
                             </button>
                         </div>
