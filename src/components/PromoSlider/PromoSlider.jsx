@@ -1,10 +1,8 @@
-// src/components/promo/PromoSlider.tsx
-import React from "react";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination, EffectFade } from "swiper/modules";
 import { HiOutlineArrowLeft, HiOutlineArrowRight } from "react-icons/hi";
 import { motion } from "framer-motion";
-
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
