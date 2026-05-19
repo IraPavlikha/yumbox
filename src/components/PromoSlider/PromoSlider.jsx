@@ -1,8 +1,8 @@
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination, EffectFade } from "swiper/modules";
 import { HiOutlineArrowLeft, HiOutlineArrowRight } from "react-icons/hi";
 import { motion } from "framer-motion";
+
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -16,21 +16,22 @@ const slides = [
         title: "СЕТ 21",
         price: "934 ₴",
         image: "/src/assets/dessert.png",
-        bgTitle: "YUM\nBOX"
+        bgTitle: "YUM\nBOX",
     },
     {
         id: 2,
         title: "СЕТ 22",
         price: "1200 ₴",
         image: "/src/assets/dessert.png",
-        bgTitle: "YUM\nBOX"
-    }
+        bgTitle: "YUM\nBOX",
+    },
 ];
 
 const PromoSlider = () => {
     return (
         <section className={styles.slider}>
             <div className="container">
+
                 <Swiper
                     modules={[Autoplay, Navigation, Pagination, EffectFade]}
                     effect="fade"
@@ -42,21 +43,21 @@ const PromoSlider = () => {
                     }}
                     pagination={{
                         clickable: true,
-                        bulletActiveClass: styles.bulletActive
+                        bulletActiveClass: styles.bulletActive,
                     }}
-                    loop={true}
+                    loop
                     className={styles.mySwiper}
                 >
                     {slides.map((slide) => (
                         <SwiperSlide key={slide.id}>
                             {({ isActive }) => (
                                 <div className={styles.card}>
-                                    {/* Фоновый текст */}
+
                                     <div className={styles.bgTextContainer}>
                                         <motion.span
-                                            key={`bg-${slide.id}`}
                                             initial={{ opacity: 0 }}
-                                            animate={isActive ? { opacity: 0.1 } : { opacity: 0 }}
+                                            // Анімуємо до 1, а реальний ліміт задаємо в SCSS через змінну
+                                            animate={isActive ? { opacity: 1 } : { opacity: 0 }}
                                             transition={{ duration: 0.8 }}
                                             className={styles.largeTitle}
                                         >
@@ -68,33 +69,33 @@ const PromoSlider = () => {
 
                                     <div className={styles.content}>
                                         <motion.img
-                                            key={`img-${slide.id}`}
                                             src={slide.image}
                                             alt={slide.title}
                                             className={styles.mainImg}
                                             initial={{ opacity: 0, y: 50, scale: 0.8 }}
-                                            animate={isActive
-                                                ? { opacity: 1, y: 0, scale: 1 }
-                                                : { opacity: 0, y: 50, scale: 0.8 }
+                                            animate={
+                                                isActive
+                                                    ? { opacity: 1, y: 0, scale: 1 }
+                                                    : { opacity: 0, y: 50, scale: 0.8 }
                                             }
-                                            transition={{
-                                                type: "spring",
-                                                stiffness: 70,
-                                                damping: 15,
-                                                delay: 0.1
-                                            }}
+                                            transition={{ type: "spring", stiffness: 70, damping: 15 }}
                                         />
 
                                         <div className={styles.info}>
                                             <motion.h2
-                                                animate={isActive ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                                                 className={styles.title}
+                                                animate={
+                                                    isActive ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }
+                                                }
                                             >
                                                 {slide.title}
                                             </motion.h2>
+
                                             <motion.div
-                                                animate={isActive ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
                                                 className={styles.priceTag}
+                                                animate={
+                                                    isActive ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }
+                                                }
                                             >
                                                 {slide.price}
                                             </motion.div>
@@ -103,9 +104,9 @@ const PromoSlider = () => {
 
                                     <div className={styles.badge}>
                                         <motion.img
-                                            animate={isActive ? { scale: 1 } : { scale: 0 }}
                                             src="/src/assets/logo-circle.png"
                                             alt="logo"
+                                            animate={isActive ? { scale: 1 } : { scale: 0 }}
                                         />
                                     </div>
                                 </div>
@@ -116,12 +117,15 @@ const PromoSlider = () => {
                     <button className={`${styles.navBtn} ${styles.customPrev}`}>
                         <HiOutlineArrowLeft />
                     </button>
+
                     <button className={`${styles.navBtn} ${styles.customNext}`}>
                         <HiOutlineArrowRight />
                     </button>
                 </Swiper>
+
             </div>
         </section>
     );
 };
+
 export default PromoSlider;

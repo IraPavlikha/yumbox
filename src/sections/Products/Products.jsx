@@ -30,8 +30,7 @@ const Products = () => {
                     active={active}
                     setActive={setActive}
                 />
-
-                <div className={styles.grid}>
+                <div id="catalog" className={styles.grid}>
                     {filtered.map((product) => (
                         <ProductCard key={product.id} product={product} />
                     ))}
@@ -40,5 +39,4 @@ const Products = () => {
         </section>
     );
 };
-
 export default Products;

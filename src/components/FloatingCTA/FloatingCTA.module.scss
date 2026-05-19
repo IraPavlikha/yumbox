@@ -2,31 +2,90 @@
 
 .cta {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: $accent;
+  z-index: 1000;
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: white;
-  box-shadow: 0 10px 40px rgba(255, 59, 48, 0.35);
-}
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
 
-.cta span {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  background: white;
-  color: black;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: 700;
+  @media (min-width: 769px) {
+    bottom: 24px;
+    right: 24px;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: $accent;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 10px 40px rgba(247, 164, 58, 0.35);
+
+    .price {
+      display: none;
+    }
+
+    .icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .count {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: white;
+      color: black;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+  }
+
+  @media (max-width: 768px) {
+    bottom: 20px;
+    right: 16px;
+    background: #000;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 100px;
+    padding: 4px 12px 4px 4px;
+    gap: 8px;
+
+    .icon {
+      display: none;
+    }
+
+    .badge {
+      background: #e31e24;
+      color: white;
+      min-width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .price {
+      display: block;
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .count {
+      position: static;
+    }
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
 }

@@ -15,30 +15,46 @@
   border-radius: 20px;
   overflow: hidden;
   margin-bottom: 16px;
-  img { width: 100%; height: 100%; object-fit: cover; }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .content {
   width: 100%;
-  h3 { font-size: 20px; color: white; margin-bottom: 6px; }
+
+  h3 {
+    font-size: 20px;
+    color: white;
+    margin-bottom: 6px;
+  }
 }
 
-.weight { color: #666; font-size: 14px; display: block; margin-bottom: 16px; }
+.weight {
+  color: #666;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 16px;
+}
 
 .interactiveArea {
   width: 100%;
-  min-height: 54px;
+  height: 52px;
+  position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .priceWrapper {
-  width: 100%;
-  position: relative;
+  position: absolute;
+  inset: 0;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
   .price {
     font-size: 18px;
@@ -49,23 +65,29 @@
 
   .addBtn {
     position: absolute;
-    top: 0;
-    width: 100%;
-    height: 52px;
+    inset: 0;
     border-radius: 100px;
     border: 1px solid rgba(255, 255, 255, 0.4);
     background: transparent;
     color: white;
     font-size: 14px;
     cursor: pointer;
+
     opacity: 0;
     visibility: hidden;
-    transform: scale(0.95);
+    transform: scale(0.98);
     transition: all 0.2s ease;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &:hover {
-    .price { opacity: 0; }
+    .price {
+      opacity: 0;
+    }
+
     .addBtn {
       opacity: 1;
       visibility: visible;
@@ -75,8 +97,9 @@
 }
 
 .addedStatus {
-  width: 100%;
-  height: 52px;
+  position: absolute;
+  inset: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -87,7 +110,6 @@
   background: rgba(255, 255, 255, 0.05);
   color: white;
   font-size: 14px;
-  padding: 0 15px;
 
   .icon {
     color: #4caf50;

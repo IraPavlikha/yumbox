@@ -19,6 +19,7 @@
   padding: 28px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .header {
@@ -26,6 +27,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 32px;
+  flex-shrink: 0;
 
   h2 {
     font-size: 32px;
@@ -39,6 +41,26 @@
     color: white;
     font-size: 24px;
     cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &:focus-visible {
+      outline: 2px solid #f7a43a;
+      outline-offset: 2px;
+    }
   }
 }
 
@@ -49,13 +71,11 @@
   flex-direction: column;
   gap: 12px;
 
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 
-  &::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -106,6 +126,26 @@
   font-size: 20px;
   cursor: pointer;
   flex-shrink: 0;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: rgba(247, 164, 58, 0.15);
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #f7a43a;
+    outline-offset: 2px;
+  }
 }
 
 .itemBottom {
@@ -129,6 +169,7 @@
   padding: 4px 12px;
   gap: 16px;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
 
   button {
     background: none;
@@ -136,6 +177,27 @@
     color: white;
     font-size: 18px;
     cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+
+    &:focus-visible {
+      outline: 2px solid #f7a43a;
+      outline-offset: 2px;
+    }
   }
 
   span {
@@ -151,6 +213,7 @@
   background: #111111;
   border-radius: 24px;
   padding: 20px;
+  flex-shrink: 0;
 
   .summary {
     display: flex;
@@ -181,14 +244,6 @@
     }
   }
 
-  .deliveryRow {
-    display: flex;
-    justify-content: space-between;
-    color: white;
-    font-size: 18px;
-    margin-bottom: 16px;
-  }
-
   .checkoutBtn {
     width: 100%;
     height: 64px;
@@ -200,10 +255,27 @@
     font-size: 18px;
     cursor: pointer;
     text-transform: lowercase;
-    transition: transform 0.2s;
+    transition: all 0.2s;
 
-    &:active {
+    &:hover:not(.disabled) {
+      transform: scale(1.02);
+      box-shadow: 0 8px 16px rgba(247, 164, 58, 0.3);
+    }
+
+    &:active:not(.disabled) {
       transform: scale(0.98);
+    }
+
+    &:focus-visible {
+      outline: 3px solid white;
+      outline-offset: 3px;
+    }
+
+    &.disabled {
+      background: #333;
+      color: #666;
+      cursor: not-allowed;
+      opacity: 0.5;
     }
   }
 }
@@ -239,7 +311,6 @@
       font-size: 16px;
     }
 
-    .deliveryRow,
     .row {
       font-size: 15px;
     }
@@ -295,8 +366,8 @@
   }
 
   .itemBottom {
-    align-items: flex-start;
-    flex-direction: column;
+    align-items: center;
+    gap: 8px;
   }
 
   .price {
@@ -304,12 +375,12 @@
   }
 
   .counter {
-    width: 100%;
-    justify-content: space-between;
-    padding: 8px 14px;
+    padding: 6px 12px;
+    gap: 12px;
 
     button {
       font-size: 16px;
+      min-width: 24px;
     }
   }
 
@@ -322,8 +393,7 @@
       margin-bottom: 12px;
     }
 
-    .row,
-    .deliveryRow {
+    .row {
       font-size: 14px;
     }
 

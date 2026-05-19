@@ -1,18 +1,15 @@
 import styles from "./Header.module.scss";
 
 import {
-    Menu,
-    X,
-} from "lucide-react";
-
-import {
     FaLinkedinIn,
     FaInstagram,
     FaFacebookF,
 } from "react-icons/fa";
 
 import { useCartStore } from "../../store/cartStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import logo from "../../assets/logo.png";
 
 const Header = () => {
     const { cart, openCart } = useCartStore();
@@ -23,23 +20,34 @@ const Header = () => {
         (acc, item) => acc + item.price * item.quantity,
         0
     );
+
     const count = cart.reduce(
         (acc, item) => acc + item.quantity,
         0
     );
+
     const toggleMenu = () => {
         setIsMenuOpen((prev) => !prev);
     };
+
+    useEffect(() => {
+        if (isMenuOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "";
+        }
+
+        return () => {
+            document.body.style.overflow = "";
+        };
+    }, [isMenuOpen]);
+
     return (
         <header className={styles.header}>
             <div className={`container ${styles.wrapper}`}>
-                <div className={styles.logo}>
-                    <div className={styles.logoFrame}></div>
-
-                    <div className={styles.logoText}>
-                        <span className={styles.yellowText}>yum</span>box
-                    </div>
-                </div>
+                <a href="#" className={styles.logo}>
+                    <img src={logo} alt="YumBox" />
+                </a>
 
                 <nav className={styles.nav}>
                     <a href="#">Каталог</a>
@@ -47,6 +55,7 @@ const Header = () => {
                     <a href="#">Про нас</a>
                     <a href="#">Контакти</a>
                 </nav>
+
                 <div className={styles.actions}>
                     <button
                         className={styles.cart}
@@ -55,25 +64,31 @@ const Header = () => {
                         <span className={styles.countBadge}>
                             {count}
                         </span>
+
                         <span className={styles.totalPrice}>
                             {total} грн
                         </span>
                     </button>
+
                     <button
-                        className={styles.burger}
+                        className={`${styles.burger} ${
+                            isMenuOpen ? styles.burgerActive : ""
+                        }`}
                         onClick={toggleMenu}
                     >
                         <span className={styles.menuText}>
                             Меню
                         </span>
-                        {isMenuOpen ? (
-                            <X size={34} />
-                        ) : (
-                            <Menu size={34} />
-                        )}
+
+                        <div className={styles.burgerIcon}>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
                     </button>
                 </div>
             </div>
+
             <div
                 className={`${styles.mobileMenu} ${
                     isMenuOpen
@@ -84,46 +99,58 @@ const Header = () => {
                 <div className={styles.mobileContent}>
                     <button
                         className={styles.mobileCart}
-                        onClick={openCart}
+                        onClick={() => {
+                            openCart();
+                            setIsMenuOpen(false);
+                        }}
                     >
                         <span className={styles.countBadge}>
                             {count}
                         </span>
+
                         <span className={styles.totalPrice}>
                             {total} грн
                         </span>
                     </button>
+
                     <nav className={styles.mobileNav}>
                         <a href="#" onClick={toggleMenu}>
                             Каталог
                         </a>
+
                         <a href="#" onClick={toggleMenu}>
                             Кейтеринг
                         </a>
+
                         <a href="#" onClick={toggleMenu}>
                             Про нас
                         </a>
+
                         <a href="#" onClick={toggleMenu}>
                             Контакти
                         </a>
                     </nav>
+
                     <div className={styles.mobileContacts}>
-                        <a href="mailto:yumbox.lutsk@gmail.com">
+                        <a>
                             yumbox.lutsk@gmail.com
                         </a>
-                        <a href="tel:+380938239293">
+
+                        <a>
                             +380 93 823 92 93
                         </a>
                     </div>
                     <div className={styles.socials}>
                         <a href="#">
-                            <FaLinkedinIn/>
+                            <FaLinkedinIn />
                         </a>
+
                         <a href="#">
-                            <FaInstagram/>
+                            <FaInstagram />
                         </a>
+
                         <a href="#">
-                            <FaFacebookF/>
+                            <FaFacebookF />
                         </a>
                     </div>
                 </div>
@@ -131,4 +158,5 @@ const Header = () => {
         </header>
     );
 };
+
 export default Header;

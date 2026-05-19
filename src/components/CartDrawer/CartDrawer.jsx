@@ -19,7 +19,7 @@ const CartDrawer = () => {
         0
     );
 
-    const deliveryFee = 50;
+    const deliveryFee = cart.length > 0 ? 50 : 0;
     const discount = subtotal >= 1000 ? subtotal * 0.1 : 0;
     const totalToPay = subtotal - discount + deliveryFee;
 
@@ -57,7 +57,6 @@ const CartDrawer = () => {
 
         console.groupEnd();
         clearCart();
-        //closeCart();
     };
 
     return (
@@ -142,15 +141,18 @@ const CartDrawer = () => {
                                     </div>
                                 )}
 
-                                <div className={styles.row}>
-                                    <span>Доставка</span>
-                                    <span>{deliveryFee} ₴</span>
-                                </div>
+                                {cart.length > 0 && (
+                                    <div className={styles.row}>
+                                        <span>Доставка</span>
+                                        <span>{deliveryFee} ₴</span>
+                                    </div>
+                                )}
                             </div>
 
                             <button
-                                className={styles.checkoutBtn}
+                                className={`${styles.checkoutBtn} ${cart.length === 0 ? styles.disabled : ''}`}
                                 onClick={handleCheckout}
+                                disabled={cart.length === 0}
                             >
                                 оформити за {totalToPay.toFixed(0)} ₴
                             </button>
